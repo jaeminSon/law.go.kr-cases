@@ -1,4 +1,4 @@
-# [국가법령정보센터](https://www.law.go.kr/LSW/precSc.do) 판례 crawler
+# [국가법령정보센터](https://www.law.go.kr/LSW/precSc.do) 판례 crawler (accessed on 2023/05/14)
 
 ### 개별 판례들을 text 파일로 저장
 
