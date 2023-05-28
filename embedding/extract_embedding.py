@@ -45,7 +45,7 @@ def run(args):
     model = AutoModel.from_pretrained(args.hf_model)
     tokenizer = AutoTokenizer.from_pretrained(args.hf_tokenizer)
 
-    dir_home = Path(__file__).parent / "../crawl/crawled_data"
+    dir_home = args.dir_text
     for path_txt in dir_home.iterdir():
         input_text = read_txt(path_txt)
         path_save = get_save_path(args.dir_embedding, path_txt)
@@ -60,6 +60,7 @@ if __name__ == "__main__":
     parser.add_argument('--hf_tokenizer', type=str, default="monologg/kobigbird-bert-base")
     parser.add_argument('--max_len_single_sentence', type=int, default=4094)  # 4096 - 2 (padded by '[CLS]' and 'SEP')
     parser.add_argument('--sliding_window', type=int, default=2047)  # 2047 == 4094 // 2
+    parser.add_argument('--dir_text', type=str, default="../crawl/crawled_data")
     parser.add_argument('--dir_embedding', type=str, default="./embedding_vectors")
     args = parser.parse_args()
 
