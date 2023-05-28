@@ -1,2 +1,2 @@
 .DS_Store
-crawled_data/*.txt
+crawl/crawled_data/*.txt
