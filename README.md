@@ -8,3 +8,6 @@
 ├── crawl # collect data from law.go.kr
 └── embedding # extract text embeddings using huggingface model
 ```
+
+## Data download
+[Hugging Face repo](https://huggingface.co/datasets/woalsdnd/law.go.kr)
