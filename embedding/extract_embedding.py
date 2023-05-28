@@ -49,9 +49,10 @@ def run(args):
     dir_home = Path(__file__).parent / "../crawl/crawled_data"
     for path_txt in dir_home.iterdir():
         input_text = read_txt(path_txt)
-        embedding = get_embedding(input_text, model, tokenizer, args.max_len_single_sentence, args.sliding_window)
         path_save = get_save_path(args.dir_embedding, path_txt)
-        save_to_npy(path_save, embedding.detach().numpy())
+        if not path_save.exists():
+            embedding = get_embedding(input_text, model, tokenizer, args.max_len_single_sentence, args.sliding_window)
+            save_to_npy(path_save, embedding.detach().numpy())
 
 
 if __name__ == "__main__":
