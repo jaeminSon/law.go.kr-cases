@@ -20,12 +20,14 @@ def get_embedding(input_text: str, model, tokenizer, max_len_single_sentence, sl
         # then finally, average the embeddings
         list_embedding = []
         for s in range(0, len_seq, sliding_window):
-            output = model(input_ids[:, s:s+max_len_single_sentence])
-            embedding = output["pooler_output"]
-            list_embedding.append(embedding)
+            with torch.no_grad():
+                output = model(input_ids[:, s:s+max_len_single_sentence])
+                embedding = output["pooler_output"]
+                list_embedding.append(embedding)
         return torch.stack(list_embedding).mean(dim=0)
     else:
-        output = model(input_ids)
+        with torch.no_grad():
+            output = model(input_ids)
         return output["pooler_output"]
 
 
@@ -43,15 +45,17 @@ def run(args):
 
     # load model and tokenizer
     model = AutoModel.from_pretrained(args.hf_model)
+    model.eval()
     tokenizer = AutoTokenizer.from_pretrained(args.hf_tokenizer)
 
-    dir_home = args.dir_text
+    dir_home = Path(args.dir_text)
     for path_txt in dir_home.iterdir():
-        input_text = read_txt(path_txt)
-        path_save = get_save_path(args.dir_embedding, path_txt)
-        if not path_save.exists():
-            embedding = get_embedding(input_text, model, tokenizer, args.max_len_single_sentence, args.sliding_window)
-            save_to_npy(path_save, embedding.detach().numpy())
+        if ".txt" in path_txt.name:
+            input_text = read_txt(path_txt)
+            path_save = get_save_path(args.dir_embedding, path_txt)
+            if not path_save.exists():
+                embedding = get_embedding(input_text, model, tokenizer, args.max_len_single_sentence, args.sliding_window)
+                save_to_npy(path_save, embedding.detach().numpy())
 
 
 if __name__ == "__main__":
