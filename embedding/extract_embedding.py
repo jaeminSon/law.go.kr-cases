@@ -20,7 +20,6 @@ def get_embedding(input_text: str, model, tokenizer, max_len_single_sentence, sl
         # then finally, average the embeddings
         list_embedding = []
         for s in range(0, len_seq, sliding_window):
-            print(s,s+max_len_single_sentence)
             output = model(input_ids[:, s:s+max_len_single_sentence])
             embedding = output["pooler_output"]
             list_embedding.append(embedding)
