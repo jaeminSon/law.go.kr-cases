@@ -12,6 +12,12 @@ def read_txt(path):
         return "".join(f.readlines())
 
 
+def inference(model, input):
+    with torch.no_grad():
+        output = model(input)
+    return output["pooler_output"]
+
+
 def get_embedding(input_text: str, model, tokenizer, max_len_single_sentence, sliding_window):
     input_ids = tokenizer.encode(input_text, return_tensors="pt")
     bs, len_seq = input_ids.shape
@@ -20,15 +26,11 @@ def get_embedding(input_text: str, model, tokenizer, max_len_single_sentence, sl
         # then finally, average the embeddings
         list_embedding = []
         for s in range(0, len_seq, sliding_window):
-            with torch.no_grad():
-                output = model(input_ids[:, s:s+max_len_single_sentence])
-                embedding = output["pooler_output"]
-                list_embedding.append(embedding)
+            embedding = inference(model, input_ids[:, s:s+max_len_single_sentence])
+            list_embedding.append(embedding)
         return torch.stack(list_embedding).mean(dim=0)
     else:
-        with torch.no_grad():
-            output = model(input_ids)
-        return output["pooler_output"]
+        return inference(model, input_ids)
 
 
 def get_save_path(dir_save_home, path_txt):
