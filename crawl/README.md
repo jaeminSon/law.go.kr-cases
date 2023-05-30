@@ -62,3 +62,6 @@ python python law.go.kr-crawler.py
 그러므로 재항고를 기각하기로 하여, 관여 대법관의 일치된 의견으로 주문과 같이 결정한다.
 대법관 민유숙(재판장) 조재연 이동원 천대엽(주심)
 ```
+
+## 다른 데이터
+ - [LBOX: 국가법령정보센터 판례 (~2022 년 10 월까지) 8만개 + LBox database 7만개](https://huggingface.co/datasets/lbox/lbox_open)
