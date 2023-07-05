@@ -1,4 +1,5 @@
 *.zip
+*.pdf
 .DS_Store
 crawl/crawled_data/*.txt
 embedding/embedding_vectors/*.npy
