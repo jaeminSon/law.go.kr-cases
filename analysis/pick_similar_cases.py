@@ -26,7 +26,7 @@ def run(args):
         f_others = embedding_npy_names[:i] + embedding_npy_names[i+1:]
 
         similarities = cosine_similarity([v_q], v_others)[0]
-        top_indices = sorted(range(len(similarities)), key=lambda i: similarities[i], reverse=True)[:args.top]
+        top_indices = sorted(range(len(similarities)), key=lambda i: similarities[i], reverse=True)[:args.topk]
         for rank, top_i in enumerate(top_indices):
             src_txt_name = f_others[top_i].replace(".npy", ".txt")
             shutil.copy(os.path.join(args.dir_crawled_data, src_txt_name),
@@ -37,10 +37,10 @@ def run(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Example script using argparse')
-    parser.add_argument('--dir_crawled_data', type=str, required=True)
-    parser.add_argument('--dir_embedding_vectors', type=str, required=True)
+    parser.add_argument('--dir_crawled_data', type=str, default="../crawl/crawled_data")
+    parser.add_argument('--dir_embedding_vectors', type=str, default="../embedding/embedding_vectors")
     parser.add_argument('--n_cases', type=int, required=True)
-    parser.add_argument('--top', type=int, required=True)
+    parser.add_argument('--topk', type=int, required=True)
     args = parser.parse_args()
 
     run(args)

@@ -92,8 +92,8 @@ def run(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Example script using argparse')
-    parser.add_argument('--dir_crawled_data', type=str, required=True)
-    parser.add_argument('--dir_embedding_vectors', type=str, required=True)
+    parser.add_argument('--dir_crawled_data', type=str, default="../crawl/crawled_data")
+    parser.add_argument('--dir_embedding_vectors', type=str, default="../embedding/embedding_vectors")
     parser.add_argument('--path_save', type=str, required=True)
     args = parser.parse_args()
 
